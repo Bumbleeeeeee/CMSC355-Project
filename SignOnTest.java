@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class LogOnTest 
+public class SignOnTest 
 {
     @Test
     /**
