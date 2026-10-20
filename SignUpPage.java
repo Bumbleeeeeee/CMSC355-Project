@@ -33,9 +33,11 @@ public class SignUpPage implements SignOnInterface
         if( !validUsername(username) ) 
             throw new IllegalArgumentException("Username is Invalid");
         
-        if( !validPassword(password1) || !password1.equals(password2)) 
+        else if( !validPassword(password1) ) 
             throw new IllegalArgumentException("Password is Invalid");
         
+        else if( !password1.equals(password2) )
+            throw new IllegalArgumentException("Passwords must Match");
         return true;
     }
 }
