@@ -13,17 +13,9 @@ public class SignUpPage implements SignOnInterface
     
     public SignUpPage(String username, String password1, String password2)
     {
-        if( validUsername(username) )
-            this.username = username;
-        else throw new IllegalArgumentException("Username is Invalid");
-        
-        if( validPassword(password1) )
-            this.password1 = password1;
-        else throw new IllegalArgumentException("Password is Invalid");
-        
-        if( validPassword(password2) )
-            this.password2 = password2;
-        else throw new IllegalArgumentException("Password is Invalid");
+        this.username = username;
+        this.password1 = password1;
+        this.password2 = password2;
     }
     
     public String getUsername()
@@ -34,5 +26,16 @@ public class SignUpPage implements SignOnInterface
     public String getPassword()
     {
         return "password";
+    }
+    
+    public boolean attemptLogin()
+    {
+        if( !validUsername(username) ) 
+            throw new IllegalArgumentException("Username is Invalid");
+        
+        if( !validPassword(password1) || !password1.equals(password2)) 
+            throw new IllegalArgumentException("Password is Invalid");
+        
+        return true;
     }
 }
