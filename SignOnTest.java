@@ -1,4 +1,5 @@
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SignOnTest 
 {
@@ -33,7 +34,13 @@ public class SignOnTest
     @Test
     public void TC02_UserFilled()
     {
+        String password = "12345";
         
+        SignInPage test = new SignInPage("", password);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> { test.attemptLogin(); } );
+        
+        assertEquals("Username field must be filled", exception.getMessage());
     }
     
     /**
