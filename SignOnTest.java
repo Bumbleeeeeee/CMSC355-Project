@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SignOnTest 
 {
-    @Test
     /**
      * Logging in works as expected
      * 
@@ -16,6 +15,7 @@ public class SignOnTest
      * Expected Result:
      *      User is properly logged on
      */     
+    @Test
     public void TC01_LogOnGeneral()
     {
         
@@ -56,7 +56,13 @@ public class SignOnTest
     @Test
     public void TC03_PassFilled()
     {
+        String username = "test";
         
+        SignInPage test = new SignInPage(username, "");
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> { test.attemptLogin(); } );
+        
+        assertEquals("Password field must be filled", exception.getMessage());
     }
     
     /**
@@ -74,7 +80,18 @@ public class SignOnTest
     @Test
     public void TC04_ExistingUser()
     {
+        String username = "test";
         
+        String password1 = "12345";
+        String password2 = "67890";
+        
+        SignUpPage test1 = new SignUpPage(username, password1, password1);
+        assertDoesNotThrow( () -> test1.attemptLogin() );
+        
+        SignUpPage test2 = new SignUpPage(username, password2, password2);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test2.attemptLogin() );
+        
+        assertEquals("Username already exists", exception.getMessage());
     }
     
     /**
@@ -92,7 +109,16 @@ public class SignOnTest
     @Test
     public void TC05_PassMatch()
     {
+        String username = "test";
         
+        String password1 = "12345";
+        String password2 = "67890";
+        
+        SignUpPage test1 = new SignUpPage(username, password1, password2);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test1.attemptLogin() );
+        
+        assertEquals("Passwords must match", exception.getMessage());
     }
     
     /**
