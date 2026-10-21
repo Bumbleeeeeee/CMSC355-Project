@@ -101,4 +101,11 @@ abstract class SignOnAbstract
         
         return false;
     }
+    
+    public void addUser(String username, String password)
+    {
+        existingUsernames.add(username);
+        
+        // add logic to hash password and save it to another arraylist?
+    }
 }

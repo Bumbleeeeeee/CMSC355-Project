@@ -42,6 +42,8 @@ public class SignUpPage extends SignOnAbstract
         else if( !this.password1.equals(this.password2) )
             throw new IllegalArgumentException("Passwords must match");
         
+        addUser(username, password1);
+        
         return true;
     }
 }
