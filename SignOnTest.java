@@ -169,7 +169,14 @@ public class SignOnTest
     @Test
     public void TC08_UserIllegalChars()
     {
+        String username = "         ‌‍‎‏‪ ⁤⁣⁡";
+        String password = "12345";
         
+        SignUpPage test1 = new SignUpPage(username, password, password);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test1.attemptLogin() );
+        
+        assertEquals("Username contains invalid characters", exception.getMessage());
     }
     
     /**
