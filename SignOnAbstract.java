@@ -92,6 +92,11 @@ abstract class SignOnAbstract
         return false;
     }
     
+    /**
+     * Checks if a username is present in existing usernames
+     * @param username string to check for
+     * @return true if username already exists or false otherwise
+     */
     public boolean usernameExists(String username)
     {
         for( String existingUser : existingUsernames )
@@ -102,6 +107,11 @@ abstract class SignOnAbstract
         return false;
     }
     
+    /**
+     * Adds username to existing usernames and hashes password with username to add to database
+     * @param username 
+     * @param password
+     */
     public void addUser(String username, String password)
     {
         existingUsernames.add(username);
