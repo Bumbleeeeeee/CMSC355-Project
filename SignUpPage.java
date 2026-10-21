@@ -30,14 +30,20 @@ public class SignUpPage extends SignOnAbstract
     
     public boolean attemptLogin()
     {
-        if( containsFilteredWords(this.username) ) 
+        if( this.username.equals("") )
+            throw new IllegalArgumentException("Username field must be filled");
+        else if( containsFilteredWords(this.username) ) 
             throw new IllegalArgumentException("Username contains filtered words");
         else if( !containsValidCharacters(this.username) )
             throw new IllegalArgumentException("Username contains invalid characters");
         else if( usernameExists(this.username) )
             throw new IllegalArgumentException("Username already exists");
         
-        if( !containsValidCharacters(this.password1) ) 
+        if( this.password1.equals("") )
+            throw new IllegalArgumentException("Username field must be filled");
+        else if( this.password2.equals("") )
+            throw new IllegalArgumentException("Username field must be filled");
+        else if( !containsValidCharacters(this.password1) ) 
             throw new IllegalArgumentException("Password contains invalid characters");
         else if( !this.password1.equals(this.password2) )
             throw new IllegalArgumentException("Passwords must match");
