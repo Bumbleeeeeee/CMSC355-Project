@@ -30,14 +30,18 @@ public class SignUpPage extends SignOnAbstract
     
     public boolean attemptLogin()
     {
-        if( !validUsername(username) ) 
-            throw new IllegalArgumentException("Username is Invalid");
+        if( containsFilteredWords(this.username) ) 
+            throw new IllegalArgumentException("Username contains filtered words");
+        else if( !containsValidCharacters(this.username) )
+            throw new IllegalArgumentException("Username contains invalid characters");
+        else if( usernameExists(this.username) )
+            throw new IllegalArgumentException("Username already exists");
         
-        else if( !validPassword(password1) ) 
-            throw new IllegalArgumentException("Password is Invalid");
+        if( !containsValidCharacters(this.password1) ) 
+            throw new IllegalArgumentException("Password contains invalid characters");
+        else if( !this.password1.equals(this.password2) )
+            throw new IllegalArgumentException("Passwords must match");
         
-        else if( !password1.equals(password2) )
-            throw new IllegalArgumentException("Passwords must Match");
         return true;
     }
 }

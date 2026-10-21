@@ -28,36 +28,6 @@ abstract class SignOnAbstract
     // Default Functions
     
     /**
-     * Determines if username is considered valid
-     * @param username user specified username
-     * @return true if username is valid, false otherwise.
-     */
-    public boolean validUsername(String username)
-    {
-        if ( containsFilteredWords(username) || !containsValidCharacters(username) )
-        {
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
-     * Determines if password is considered valid
-     * @param password user specified password
-     * @return true if password contains only valid characters, false otherwise
-     */
-    public boolean validPassword(String password)
-    {
-        if( !containsValidCharacters(password) )
-        {
-            return false;
-        }
-        
-        return true;
-    }
-    
-    /**
      * Determines if specified string is only alphanumeric or allowed symbols  
      * @param str Any string
      * @return true if str is only alphanumeric or if symbols are in allowed symbols  
@@ -85,7 +55,7 @@ abstract class SignOnAbstract
         // Basic case
         if (str == null) 
         {
-        return false;
+            return false;
         }
         
         // Actual check
@@ -117,6 +87,16 @@ abstract class SignOnAbstract
             String curWord = str.substring( i, i+word.length()+1 );
             
             if( curWord.equals(word) ){ return true; }
+        }
+        
+        return false;
+    }
+    
+    public boolean usernameExists(String username)
+    {
+        for( String existingUser : existingUsernames )
+        {
+            if( username.equals(existingUser) ){ return true; }
         }
         
         return false;

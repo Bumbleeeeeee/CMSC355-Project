@@ -27,11 +27,15 @@ public class SignInPage extends SignOnAbstract
     
     public boolean attemptLogin()
     {
-        if( !validUsername(username) ) 
-            throw new IllegalArgumentException("Username is Invalid");
+        if( containsFilteredWords(this.username) ) 
+            throw new IllegalArgumentException("Username contains filtered words");
+        else if( !containsValidCharacters(this.username) )
+            throw new IllegalArgumentException("Username contains invalid characters");
+        else if( usernameExists(this.username) )
+            throw new IllegalArgumentException("Username already exists");
         
-        if( !validPassword(password) ) 
-            throw new IllegalArgumentException("Password is Invalid");
+        if( !containsValidCharacters(this.password) ) 
+            throw new IllegalArgumentException("Password contains invalid characters");
         
         return true;
     }
