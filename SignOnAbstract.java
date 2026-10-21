@@ -1,25 +1,28 @@
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public interface SignOnInterface 
+abstract class SignOnAbstract 
 {
     // Static Final Variables
-    
-    String allowedSymbols = "@#$_-!";
+    public static final String allowedSymbols = "@#$_-!";
     
     // this can be a placeholder, I'm not sure I'm comfortable trying to actually add offensive language to this.
     // Also make sure anything added here is lowercase
-    String[] FilteredWords = 
+    public static final String[] filteredWords = 
     {
         "fuck", 
         "shit"
     };
     
+    //Static Mutable Variables
+    private static ArrayList<String> existingUsernames = new ArrayList<>();
+    
     
     // Required Functions
     
-    String getUsername();
-    String getPassword();
-    boolean attemptLogin();
+    abstract String getUsername();
+    abstract String getPassword();
+    abstract boolean attemptLogin();
     
     
     // Default Functions
@@ -29,7 +32,7 @@ public interface SignOnInterface
      * @param username user specified username
      * @return true if username is valid, false otherwise.
      */
-    default boolean validUsername(String username)
+    public boolean validUsername(String username)
     {
         if ( containsFilteredWords(username) || !containsValidCharacters(username) )
         {
@@ -44,7 +47,7 @@ public interface SignOnInterface
      * @param password user specified password
      * @return true if password contains only valid characters, false otherwise
      */
-    default boolean validPassword(String password)
+    public boolean validPassword(String password)
     {
         if( !containsValidCharacters(password) )
         {
@@ -59,7 +62,7 @@ public interface SignOnInterface
      * @param str Any string
      * @return true if str is only alphanumeric or if symbols are in allowed symbols  
      */
-    default boolean containsValidCharacters(String str)
+    public boolean containsValidCharacters(String str)
     {
         // Error case, just return false
         if (str == null || str.isEmpty()) { return false; }
@@ -77,7 +80,7 @@ public interface SignOnInterface
      * @param str Any string
      * @return true if the string contains a word in FilteredWords
      */
-    default boolean containsFilteredWords(String str)
+    public boolean containsFilteredWords(String str)
     {
         // Basic case
         if (str == null) 
@@ -86,7 +89,7 @@ public interface SignOnInterface
         }
         
         // Actual check
-        for ( String word : FilteredWords )
+        for ( String word : filteredWords )
         {
             if( containsWord(str, word)){ return true; }
         }
@@ -109,9 +112,9 @@ public interface SignOnInterface
         str = str.toLowerCase();
         
         // Increment through every word length sequence of letters in str to see if it appears
-        for( int i = 0; i < str.length() - word.length(); i++ )
+        for( int i = 0; i < str.length() - word.length() - 1; i++ )
         {
-            String curWord = str.substring( i, i+word.length() );
+            String curWord = str.substring( i, i+word.length()+1 );
             
             if( curWord.equals(word) ){ return true; }
         }

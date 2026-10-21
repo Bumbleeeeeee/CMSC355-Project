@@ -1,4 +1,4 @@
-public class SignUpPage implements SignOnInterface
+public class SignUpPage extends SignOnAbstract
 {
     String username;
     String password1;
