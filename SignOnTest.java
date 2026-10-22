@@ -109,7 +109,7 @@ public class SignOnTest
     @Test
     public void TC05_PassMatch()
     {
-        String username = "test";
+        String username = "test1";
         
         String password1 = "12345";
         String password2 = "67890";
@@ -207,7 +207,14 @@ public class SignOnTest
     @Test
     public void TC09_PassIllegalChars()
     {
+        String username = "test2";
+        String password = "         ‌‍‎‏‪ ⁤⁣⁡";
         
+        SignUpPage test1 = new SignUpPage(username, password, password);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test1.attemptLogin() );
+        
+        assertEquals("Password contains invalid characters", exception.getMessage());
     }
     
     /**
@@ -219,11 +226,18 @@ public class SignOnTest
      *      Username: fuck
      *      Password: 12345
      * Expected Result:
-     *      Error is thrown, Username must follow gommunity guidelines
+     *      Error is thrown, Username must follow community guidelines
      */
     @Test
     public void TC10_Guidelines()
     {
+        String username = "fuck";
+        String password = "12345";
         
+        SignUpPage test1 = new SignUpPage(username, password, password);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test1.attemptLogin() );
+        
+        assertEquals("Username contains filtered words", exception.getMessage());
     }
 }
