@@ -135,7 +135,14 @@ public class SignOnTest
     @Test
     public void TC06_UserMaxChars()
     {
+        String username = "test123456.test123456.";
+        String password = "12345";
         
+        SignUpPage test1 = new SignUpPage(username, password, password);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test1.attemptLogin() );
+        
+        assertEquals("Username is too long", exception.getMessage());
     }
     
     /**
@@ -152,7 +159,14 @@ public class SignOnTest
     @Test
     public void TC07_PassMaxChars()
     {
+        String username = "test";
+        String password = "12345678901234567890123456789012345678901234567890!";
         
+        SignUpPage test1 = new SignUpPage(username, password, password);
+        
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> test1.attemptLogin() );
+        
+        assertEquals("Password is too long", exception.getMessage());
     }
     
     /**
