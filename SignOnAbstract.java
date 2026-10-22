@@ -77,14 +77,15 @@ abstract class SignOnAbstract
     {
         // basic case ensuring str COULD contain word
         if( str.length() < word.length() ){ return false; }
+        else if( str.equals(word) ){ return true; }
         
         // making sure all letters are same case as filters
         str = str.toLowerCase();
         
         // Increment through every word length sequence of letters in str to see if it appears
-        for( int i = 0; i < str.length() - word.length() - 1; i++ )
+        for( int i = 0; i < str.length() - word.length(); i++ )
         {
-            String curWord = str.substring( i, i+word.length()+1 );
+            String curWord = str.substring( i, i+word.length() );
             
             if( curWord.equals(word) ){ return true; }
         }
