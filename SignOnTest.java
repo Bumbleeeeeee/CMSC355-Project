@@ -223,7 +223,7 @@ public class SignOnTest
      * Preconditions:
      *      The user is on the sign up screen
      * Defined Fields:
-     *      Username: fuck
+     *      Username: duckyfucky
      *      Password: 12345
      * Expected Result:
      *      Error is thrown, Username must follow community guidelines
@@ -231,7 +231,7 @@ public class SignOnTest
     @Test
     public void TC10_Guidelines()
     {
-        String username = "fuck";
+        String username = "duckyfucky";
         String password = "12345";
         
         SignUpPage test1 = new SignUpPage(username, password, password);
