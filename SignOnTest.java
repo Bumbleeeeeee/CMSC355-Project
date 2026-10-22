@@ -18,7 +18,12 @@ public class SignOnTest
     @Test
     public void TC01_LogOnGeneral()
     {
-        
+        boolean loggedIn = false;
+        String username = "userName";
+        String password = "Password123";
+        SignInPage test = new SignInPage(username, password);
+        loggedIn = test.attemptLogin();
+        assertEquals(true, loggedIn);
     }
     
     /**
