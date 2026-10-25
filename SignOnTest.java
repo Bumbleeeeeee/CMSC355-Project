@@ -18,12 +18,13 @@ public class SignOnTest
     @Test
     public void TC01_LogOnGeneral()
     {
-        boolean loggedIn = false;
         String username = "userName";
         String password = "Password123";
-        SignInPage test = new SignInPage(username, password);
-        loggedIn = test.attemptLogin();
-        assertEquals(true, loggedIn);
+        SignUpPage signUpTest = new SignUpPage(username, password, password);
+        assertEquals( true, signUpTest.attemptLogin() );
+        
+        SignInPage signInTest = new SignInPage(username, password);
+        assertEquals(true, signInTest.attemptLogin());
     }
     
     /**
@@ -164,7 +165,7 @@ public class SignOnTest
     @Test
     public void TC07_PassMaxChars()
     {
-        String username = "test";
+        String username = "test2";
         String password = "12345678901234567890123456789012345678901234567890!";
         
         SignUpPage test1 = new SignUpPage(username, password, password);
@@ -212,7 +213,7 @@ public class SignOnTest
     @Test
     public void TC09_PassIllegalChars()
     {
-        String username = "test2";
+        String username = "test3";
         String password = "         ‌‍‎‏‪ ⁤⁣⁡";
         
         SignUpPage test1 = new SignUpPage(username, password, password);
