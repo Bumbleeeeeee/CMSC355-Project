@@ -39,9 +39,6 @@ public class SignInPage extends SignOnAbstract
         else if( !containsValidCharacters(this.username) )
             throw new IllegalArgumentException("Username contains invalid characters");
         
-        else if( usernameExists(this.username) )
-            throw new IllegalArgumentException("Username already exists");
-        
         
         
         if( this.password.equals("") )
@@ -54,6 +51,6 @@ public class SignInPage extends SignOnAbstract
             throw new IllegalArgumentException("Password contains invalid characters");
         
         
-        return true;
+        return userCredentialsValid(username, password);
     }
 }
