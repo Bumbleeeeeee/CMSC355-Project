@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class SignUpPage extends SignOnAbstract
 {
     String username;
@@ -6,9 +8,27 @@ public class SignUpPage extends SignOnAbstract
     
     public SignUpPage()
     {
-        this.username = getUsername();
-        this.password1 = getPassword();
-        this.password2 = getPassword();
+        
+        boolean flag = true;
+        while( flag )
+        {
+            this.username = getUsername();
+            this.password1 = getPassword();
+            this.password2 = getPassword();
+            
+            try
+            {
+                this.attemptLogin();
+                flag = false;
+            }
+            
+            catch( IllegalArgumentException e )
+            {
+                System.out.println("Error!\n" + e.getMessage());
+            }
+        }
+        
+        System.out.println("Success!\nLogged in as: " + this.username);
     }
     
     public SignUpPage(String username, String password1, String password2)
@@ -20,12 +40,20 @@ public class SignUpPage extends SignOnAbstract
     
     public String getUsername()
     {
-        return "username";
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Username: ");
+        String out = scan.nextLine();
+        scan.close();
+        return out;
     }
     
     public String getPassword()
     {
-        return "password";
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Password: ");
+        String out = scan.nextLine();
+        scan.close();
+        return out;
     }
     
     public boolean attemptLogin()
