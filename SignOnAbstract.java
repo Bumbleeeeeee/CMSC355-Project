@@ -1,3 +1,6 @@
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -16,6 +19,7 @@ abstract class SignOnAbstract
     
     //Static Mutable Variables
     private static ArrayList<String> existingUsernames = new ArrayList<>();
+    private static ArrayList<String> existingPasswords = new ArrayList<>();
     
     
     // Required Functions
@@ -109,14 +113,66 @@ abstract class SignOnAbstract
     }
     
     /**
+     * Checks if a username is present in existing usernames
+     * @param username string to check for
+     * @return true if username already exists or false otherwise
+     */
+    public boolean userCredentialsValid(String username, String password)
+    {
+        String hashedPassword = hash(password, username);
+        
+        for( String existingPassword : existingPasswords )
+        {
+            if( hashedPassword.equals(existingPassword) ){ return true; }
+        }
+        
+        return false;
+    }
+    
+    /**
      * Adds username to existing usernames and hashes password with username to add to database
      * @param username 
      * @param password
      */
-    public void addUser(String username, String password)
+    public boolean addUser(String username, String password)
     {
         existingUsernames.add(username);
+        existingPasswords.add(hash(password, username));
         
-        // add logic to hash password and save it to another arraylist?
+        return true;
+    }
+    
+    /**
+     * Returns an encoded string salted with the provided salt
+     * @param password string to hash
+     * @param salt salt to add
+     * @return string of encoded hexidecimal text
+     */
+    private static String hash( String password, String salt)
+    {
+        try
+        { 
+            MessageDigest digest = MessageDigest.getInstance("SHA-256"); 
+            
+            String combined = password + salt;
+            
+            byte[] encodedHash = digest.digest(combined.getBytes(StandardCharsets.UTF_8));
+            
+            // 4. Convert the byte array into a hexadecimal string
+            StringBuilder hexString = new StringBuilder();
+            
+            for (byte b : encodedHash) 
+            {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            
+            return hexString.toString();
+        }
+        
+        catch(NoSuchAlgorithmException e){ throw new RuntimeException("Hashing algorithm SHA-256 not found", e); }
     }
 }
