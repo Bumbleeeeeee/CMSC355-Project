@@ -62,8 +62,6 @@ public class SignUpPage extends SignOnAbstract
             throw new IllegalArgumentException("Passwords must match");
         
         
-        addUser(username, password1);
-        
-        return true;
+        return addUser(username, password1);
     }
 }
