@@ -1,17 +1,21 @@
+package SignOn;
 import java.util.Scanner;
 
-public class SignInPage extends SignOnAbstract
+public class SignUpPage extends SignOnAbstract
 {
     String username;
-    String password;
+    String password1;
+    String password2;
     
-    public SignInPage()
+    public SignUpPage()
     {
+        
         boolean flag = true;
         while( flag )
         {
             this.username = getUsername();
-            this.password = getPassword();
+            this.password1 = getPassword();
+            this.password2 = getPassword();
             
             try
             {
@@ -28,10 +32,11 @@ public class SignInPage extends SignOnAbstract
         System.out.println("Success!\nLogged in as: " + this.username);
     }
     
-    public SignInPage(String username, String password)
+    public SignUpPage(String username, String password1, String password2)
     {
         this.username = username;
-        this.password = password;
+        this.password1 = password1;
+        this.password2 = password2;
     }
     
     public String getUsername()
@@ -66,18 +71,26 @@ public class SignInPage extends SignOnAbstract
         else if( !containsValidCharacters(this.username) )
             throw new IllegalArgumentException("Username contains invalid characters");
         
+        else if( usernameExists(this.username) )
+            throw new IllegalArgumentException("Username already exists");
         
         
-        if( this.password.equals("") )
+        if( this.password1.equals("") )
             throw new IllegalArgumentException("Password field must be filled");
         
-        else if( this.password.length() > 50)
+        else if( this.password2.equals("") )
+            throw new IllegalArgumentException("Password field must be filled");
+        
+        else if( this.password1.length() > 50)
             throw new IllegalArgumentException("Password is too long");
         
-        else if( !containsValidCharacters(this.password) ) 
+        else if( !containsValidCharacters(this.password1) ) 
             throw new IllegalArgumentException("Password contains invalid characters");
         
+        else if( !this.password1.equals(this.password2) )
+            throw new IllegalArgumentException("Passwords must match");
         
-        return userCredentialsValid(username, password);
+        
+        return addUser(username, password1);
     }
 }
