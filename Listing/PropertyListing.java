@@ -13,14 +13,14 @@ public class PropertyListing
         
     }
     
-    public static void createReview()
+    public void createReview()
     {
         
     }
     
-    public static void displayListing()
+    public String toString()
     {
-        
+        return "";
     }
     
     

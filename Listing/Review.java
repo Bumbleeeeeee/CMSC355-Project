@@ -16,9 +16,9 @@ public class Review
         
     }
     
-    public void displayReview()
+    public String toString()
     {
-        
+        return "";
     }
     
     public boolean isValidReview()

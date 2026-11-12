@@ -12,9 +12,9 @@ public class Address
         
     }
     
-    public void displayAddress()
+    public String toString()
     {
-        
+        return "";
     }
     
     public boolean isValidZip()
