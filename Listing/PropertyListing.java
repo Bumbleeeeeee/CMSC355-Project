@@ -30,7 +30,7 @@ public class PropertyListing
      *       Manager: [manager]
      *       Address: [address]
      *       Reviews: 
-     *       [reviews/"No Reviews"]
+     *          [reviews/"None"]
      *      "
      * @see java.lang.Object#toString()
      */
@@ -45,6 +45,19 @@ public class PropertyListing
         (
             new Review(username, performance, comfort, utilities, overall, description)
         );
+    }
+    
+    public void createReview(Review review)
+    {
+        if( !reviews.contains(review) )
+        {
+            reviews.add( review );
+        }
+        
+        else
+        {
+            throw new IllegalArgumentException("Item already exists");
+        }
     }
     
     

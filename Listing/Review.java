@@ -22,9 +22,10 @@ public class Review
     
     //-// TO DO //-//
     // implement checks to validate inputs
-    // should throw 2 different errors: 
+    // should throw 3 different errors: 
     //      1, throw new IllegalArgumentException("Description contains filtered words");
-    //      2. throw new IllegalArgumentException("Invalid rating values");
+    //      2. throw new IllegalArgumentException("Description contains invalid characters");
+    //      3. throw new IllegalArgumentException("Invalid rating values");
     public Review(String username, int performance, int comfort, int utilities, int overall, String description)
     {
         
@@ -33,7 +34,7 @@ public class Review
     /**
      * Return a string of the format:
      *      "[username]: 
-     *          [performance][comfort][utilities][overall]
+     *          [performance] [comfort] [utilities] [overall]
      *          [description]
      *      [votes]"
      * @see java.lang.Object#toString()
