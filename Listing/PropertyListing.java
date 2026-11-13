@@ -12,7 +12,7 @@ public class PropertyListing
     // just implement some default values
     public PropertyListing()
     {
-        
+        this("John Doe", new Address());
     }
     
     public PropertyListing(String manager, Address location)

@@ -2,6 +2,8 @@ package Listing;
 
 public class Review 
 {
+    private static final int RATING_MAX = 5;
+
     private String username;
     
     private String description;
@@ -17,7 +19,7 @@ public class Review
     // just implement some default values
     public Review()
     {
-        
+        this("userName123", 1, 2, 3, 4, "Lorem ipsum");
     }
     
     //-// TO DO //-//
@@ -28,9 +30,23 @@ public class Review
     //      3. throw new IllegalArgumentException("Invalid rating values");
     public Review(String username, int performance, int comfort, int utilities, int overall, String description)
     {
-        
+
+        if(containsFilteredWords(description)){throw new IllegalArgumentException("Description contains filtered words");}
+        if(!containsValidCharacters(description)){throw new IllegalArgumentException("Description contains invalid characters");}
+        if(!isValidRating(performance)){throw new IllegalArgumentException("Invalid performance rating");}
+        if(!isValidRating(comfort)){throw new IllegalArgumentException("Invalid comfort rating");}
+        if(!isValidRating(utilities)){throw new IllegalArgumentException("Invalid utilities rating");}
+        if(!isValidRating(overall)){throw new IllegalArgumentException("Invalid overall rating");}
+
+        this.username=username;
+        this.performance=performance;
+        this.comfort=comfort;
+        this.utilities=utilities;
+        this.overall=overall;
+        this.description=description;
+
     }
-    
+
     /**
      * Return a string of the format:
      *      "[username]: 
@@ -58,7 +74,7 @@ public class Review
      */
     private boolean isValidRating(int rating)
     {
-        return false;
+        return rating>0 && rating<RATING_MAX;
     }
     
     //-// TO DO //-//
@@ -72,7 +88,7 @@ public class Review
      */
     private boolean isValidDescription(String str)
     {
-        return false;
+        return containsFilteredWords(str) && !containsValidCharacters(str);
     }
     
     public void upvote()
