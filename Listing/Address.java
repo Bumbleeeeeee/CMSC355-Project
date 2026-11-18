@@ -11,20 +11,14 @@ public class Address
     private String city;
     private String state;
     private String zip;
-    
-    //-// TO DO //-//
-    // Just implement default values
+
+
     public Address()
     {
         this("123 Main St", "Richmond", "Virginia","23219");
     }
-    
-    //-// TO DO //-//
-    // implement checks to validate inputs
-    // should throw 3 different errors: 
-    //      1, throw new IllegalArgumentException("Invalid city");
-    //      2. throw new IllegalArgumentException("Invalid state");
-    //      3. throw new IllegalArgumentException("Invalid zip");
+
+
     public Address(String street, String city, String state, String zip)
     {
         if(!Arrays.asList(SUPPORTED_CITIES).contains(city)){throw new IllegalArgumentException("Invalid city");}
@@ -49,9 +43,7 @@ public class Address
         return street + ", " + city + ", " + state + " " + zip;
     }
     
-    
-    //-// TO DO //-//
-    // Just follow the javadoc comment below, you know what to do
+
     /**
      * Private function for the purpose of validating zip codes
      * @param zip to validate
