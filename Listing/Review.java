@@ -5,22 +5,15 @@ import java.util.regex.Pattern;
 public class Review
 {
     private static final int RATING_MAX = 5;
-    public static final String[] filteredWords =
-            {
-                    "fuck",
-                    "shit"
-            };
-    public static final String allowedSymbols = "`~!@#$%^&*()_-+=[]{};:\'\"<>,./? ";
+    private static final String[] FILTERED_STRINGS = {"fuck", "shit" };
+    private static final String ALLOWED_SYMBOLS = "`~!@#$%^&*()_-+=[]{};:\'\"<>,./? ";
 
     private String username;
-    
     private String description;
-    
     private int performance;
     private int comfort;
     private int utilities;
     private int overall;
-    
     private int votes;
 
 
@@ -90,7 +83,7 @@ public class Review
         if (str == null || str.isEmpty()) { return false; }
 
         // Escape regex characters, ensures that regex specific symbols wont mess up regex
-        String escapedSymbols = Pattern.quote(allowedSymbols);
+        String escapedSymbols = Pattern.quote(ALLOWED_SYMBOLS);
         String regex = "[a-zA-Z0-9" + escapedSymbols + "]+";
 
         // Run regex
@@ -136,7 +129,7 @@ public class Review
         }
 
         // Actual check
-        for ( String word : filteredWords )
+        for ( String word : FILTERED_STRINGS )
         {
             if( containsWord(str, word)){ return true; }
         }
