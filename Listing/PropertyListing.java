@@ -7,12 +7,11 @@ public class PropertyListing
     private String manager;
     private Address location;
     private ArrayList<Review> reviews;
-    
-    //-// TO DO //-//
-    // just implement some default values
+
+
     public PropertyListing()
     {
-        
+        this("John Doe", new Address());
     }
     
     public PropertyListing(String manager, Address location)
@@ -21,9 +20,7 @@ public class PropertyListing
         setLocation(location);
     }
     
-    
-    //-// TO DO //-//
-    // implement some way to itterate through reviews list and append them to output
+
     /**
      * Returns a String of the format:
      *      "
@@ -36,7 +33,13 @@ public class PropertyListing
      */
     public String toString()
     {
-        return "";
+        String output = "Manager: " + this.manager + "\nAddress: " + this.location.toString() + "\nReviews:";
+        if(this.reviews.isEmpty()){return output+"None";}
+
+        for(Review review:this.reviews){
+            output += "\n" +review.toString();
+        }
+        return output;
     }
     
     public void createReview(String username, int performance, int comfort, int utilities, int overall, String description)

@@ -1,7 +1,17 @@
 package Listing;
 
-public class Review 
+import java.util.regex.Pattern;
+
+public class Review
 {
+    private static final int RATING_MAX = 5;
+    public static final String[] filteredWords =
+            {
+                    "fuck",
+                    "shit"
+            };
+    public static final String allowedSymbols = "@#$_-!";
+
     private String username;
     
     private String description;
@@ -12,25 +22,33 @@ public class Review
     private int overall;
     
     private int votes;
-    
-    //-// TO DO //-//
-    // just implement some default values
+
+
     public Review()
     {
-        
+        this("userName123", 1, 2, 3, 4, "Lorem ipsum");
     }
-    
-    //-// TO DO //-//
-    // implement checks to validate inputs
-    // should throw 3 different errors: 
-    //      1, throw new IllegalArgumentException("Description contains filtered words");
-    //      2. throw new IllegalArgumentException("Description contains invalid characters");
-    //      3. throw new IllegalArgumentException("Invalid rating values");
+
+
     public Review(String username, int performance, int comfort, int utilities, int overall, String description)
     {
-        
+
+        if(containsFilteredWords(description)){throw new IllegalArgumentException("Description contains filtered words");}
+        if(!containsValidCharacters(description)){throw new IllegalArgumentException("Description contains invalid characters");}
+        if(!isValidRating(performance)){throw new IllegalArgumentException("Invalid performance rating");}
+        if(!isValidRating(comfort)){throw new IllegalArgumentException("Invalid comfort rating");}
+        if(!isValidRating(utilities)){throw new IllegalArgumentException("Invalid utilities rating");}
+        if(!isValidRating(overall)){throw new IllegalArgumentException("Invalid overall rating");}
+
+        this.username=username;
+        this.performance=performance;
+        this.comfort=comfort;
+        this.utilities=utilities;
+        this.overall=overall;
+        this.description=description;
+
     }
-    
+
     /**
      * Return a string of the format:
      *      "[username]: 
@@ -50,7 +68,7 @@ public class Review
         );
     }
     
-    //-// TO DO //-//
+
     /**
      * validates rating values
      * @param rating to validate
@@ -58,10 +76,9 @@ public class Review
      */
     private boolean isValidRating(int rating)
     {
-        return false;
+        return rating>0 && rating<RATING_MAX;
     }
-    
-    //-// TO DO //-//
+
     /**
      * Validates that a description follows business rules
      * @param str to validate
@@ -72,9 +89,75 @@ public class Review
      */
     private boolean isValidDescription(String str)
     {
+        return containsFilteredWords(str) && !containsValidCharacters(str);
+    }
+
+    /**
+     * Determines if specified string is only alphanumeric or allowed symbols
+     * @param str Any string
+     * @return true if str is only alphanumeric or if symbols are in allowed symbols
+     */
+    public boolean containsValidCharacters(String str)
+    {
+        // Error case, just return false
+        if (str == null || str.isEmpty()) { return false; }
+
+        // Escape regex characters, ensures that regex specific symbols wont mess up regex
+        String escapedSymbols = Pattern.quote(allowedSymbols);
+        String regex = "[a-zA-Z0-9" + escapedSymbols + "]+";
+
+        // Run regex
+        return str.matches(regex);
+    }
+    /**
+     * Determines if a string contains a word anywhere within
+     * @param str Any string
+     * @param word Any string
+     * @return true if str contains word, false otherwise
+     */
+    private boolean containsWord(String str, String word)
+    {
+        // basic case ensuring str COULD contain word
+        if( str.length() < word.length() ){ return false; }
+        else if( str.equals(word) ){ return true; }
+
+        // making sure all letters are same case as filters
+        str = str.toLowerCase();
+
+        // Increment through every word length sequence of letters in str to see if it appears
+        for( int i = 0; i < str.length() - word.length(); i++ )
+        {
+            String curWord = str.substring( i, i+word.length() );
+
+            if( curWord.equals(word) ){ return true; }
+        }
+
         return false;
     }
-    
+
+    /**
+     * Determines if specified string contains any filtered words
+     * @param str Any string
+     * @return true if the string contains a word in FilteredWords
+     */
+    public boolean containsFilteredWords(String str)
+    {
+        // Basic case
+        if (str == null)
+        {
+            return false;
+        }
+
+        // Actual check
+        for ( String word : filteredWords )
+        {
+            if( containsWord(str, word)){ return true; }
+        }
+
+        return false;
+    }
+
+
     public void upvote()
     {
         votes += 1;
