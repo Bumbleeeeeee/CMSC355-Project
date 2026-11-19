@@ -12,12 +12,15 @@ public class PropertyListing
     public PropertyListing()
     {
         this("John Doe", new Address());
+        this.reviews = new ArrayList<Review>();
     }
     
     public PropertyListing(String manager, Address location)
     {
         setManager(manager);
         setLocation(location);
+        
+        this.reviews = new ArrayList<Review>();
     }
     
 
@@ -33,12 +36,21 @@ public class PropertyListing
      */
     public String toString()
     {
-        String output = "Manager: " + this.manager + "\nAddress: " + this.location.toString() + "\nReviews:";
-        if(this.reviews.isEmpty()){return output+"None";}
-
-        for(Review review:this.reviews){
-            output += "\n" +review.toString();
+        String output = 
+        "Manager: " + this.manager + 
+        "\nAddress: " + this.location.toString() 
+        + "\nReviews:";
+        
+        if(this.reviews.isEmpty())
+        {
+            return output+"\n\tNone";
         }
+
+        for(Review review:this.reviews)
+        {
+            output += "\n\t" + review.toString();
+        }
+        
         return output;
     }
     

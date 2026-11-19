@@ -28,7 +28,7 @@ public class ListingTest
     public void TC01_PropertyCreation()
     {
         String manager = "Sally Fourth";
-        Address address = new Address("123 E. Main St.", "Richmond", "VA", "23219");
+        Address address = new Address("123 E. Main St.", "Richmond", "Virginia", "23219");
         
         PropertyListing listing = new PropertyListing(manager, address);
         
@@ -62,18 +62,18 @@ public class ListingTest
             IllegalArgumentException.class, () -> 
             Area.createPropertyListing(
                 "John Doe", 
-                new Address("321 Main St", "Richmond", "VA", "12345")
+                new Address("321 Main St", "Richmond", "Virginia", "12345")
             )
         );
         
-        assertEquals("Invalid zip", exception.getMessage());
+        assertEquals("Invalid ZIP code", exception.getMessage());
         
         
         exception = assertThrows(
             IllegalArgumentException.class, () -> 
             Area.createPropertyListing(
                 "John Doe", 
-                new Address("321 Main St", "Richmond", "TX", "23219")
+                new Address("321 Main St", "Richmond", "Texas", "23219")
             )
         );
         
@@ -83,7 +83,7 @@ public class ListingTest
             IllegalArgumentException.class, () -> 
             Area.createPropertyListing(
                 "John Doe", 
-                new Address("321 Main St", "Roanoke", "VA", "23219")
+                new Address("321 Main St", "Roanoke", "Virginia", "23219")
             )
         );
         
@@ -112,7 +112,7 @@ public class ListingTest
     public void TC03_ReviewCreation()
     {
         String manager = "Sally Fourth";
-        Address address = new Address("123 E. Main St.", "Richmond", "VA", "23219");
+        Address address = new Address("123 E. Main St.", "Richmond", "Virginia", "23219");
         
         PropertyListing listing = new PropertyListing(manager, address);
         
@@ -222,7 +222,7 @@ public class ListingTest
             )
         );
         
-        assertEquals("Invalid rating values", exception.getMessage());
+        assertEquals("Invalid performance rating", exception.getMessage());
     }
     
     /**
@@ -254,7 +254,7 @@ public class ListingTest
             )
         );
         
-        assertEquals("Invalid rating values", exception.getMessage());
+        assertEquals("Invalid performance rating", exception.getMessage());
     }
     
     /**
@@ -275,7 +275,7 @@ public class ListingTest
     {
         PropertyListing listing = new PropertyListing(
             "Sally Fourth",
-            new Address("123 E. Main St.", "Richmond", "VA", "23219")
+            new Address("123 E. Main St.", "Richmond", "Virginia", "23219")
         );
         
         Review review = new Review(
@@ -286,13 +286,15 @@ public class ListingTest
         review.upvote();
         review.upvote();
         
+        listing.createReview(review);
+        
         String expected = 
         "Manager: Sally Fourth\n" +
-        "Address: 123 E. Main St., Richmond, VA 23219\n" +
+        "Address: 123 E. Main St., Richmond, Virginia 23219\n" +
         "Reviews:\n" +
         "\tBlorg:\n" +
-        "\t\t5 5 5 5\n" +
-        "\t\tTruly wonderful. Amazing\n" + 
+        "\t5, 5, 5, 5\n" +
+        "\tTruly wonderful. Amazing\n" + 
         "\t2";
         
         assertEquals(expected, listing.toString());
@@ -316,12 +318,12 @@ public class ListingTest
     {
         PropertyListing listing = new PropertyListing(
             "Sally Fourth",
-            new Address("123 E. Main St.", "Richmond", "VA", "23219")
+            new Address("123 E. Main St.", "Richmond", "Virginia", "23219")
         );
         
         String expected = 
         "Manager: Sally Fourth\n" +
-        "Address: 123 E. Main St., Richmond, VA 23219\n" +
+        "Address: 123 E. Main St., Richmond, Virginia 23219\n" +
         "Reviews:\n" +
         "\tNone";
         

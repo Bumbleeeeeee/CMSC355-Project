@@ -10,7 +10,7 @@ public class Review
                     "fuck",
                     "shit"
             };
-    public static final String allowedSymbols = "@#$_-!";
+    public static final String allowedSymbols = "`~!@#$%^&*()_-+=[]{};:\'\"<>,./? ";
 
     private String username;
     
@@ -63,7 +63,7 @@ public class Review
         (
             username + ":\n\t" + 
             performance + ", " + comfort + ", " + utilities + ", " + overall + "\n\t" +
-            description + "\n" +
+            description + "\n\t" +
             votes
         );
     }
@@ -76,20 +76,7 @@ public class Review
      */
     private boolean isValidRating(int rating)
     {
-        return rating>0 && rating<RATING_MAX;
-    }
-
-    /**
-     * Validates that a description follows business rules
-     * @param str to validate
-     * @return false if: 
-     *          1. str contains banned words or 
-     *          2. str contains banned characters.
-     *              Valid characters are: alphanumeric or: `~!@#$%^&*()-_=+/?.>,<'"[]{}\| 
-     */
-    private boolean isValidDescription(String str)
-    {
-        return containsFilteredWords(str) && !containsValidCharacters(str);
+        return rating>= 0 && rating <= RATING_MAX;
     }
 
     /**
